@@ -11,10 +11,18 @@ import { PdvPage } from './pages/PdvPage';
 import { BudgetsPage } from './pages/BudgetsPage';
 import { FipePage } from './pages/FipePage';
 import { VehiclesPage } from './pages/VehiclesPage';
+import { AdminPage } from './pages/AdminPage';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const token = useAuthStore((s) => s.token);
   return token ? <>{children}</> : <Navigate to="/login" replace />;
+}
+
+function RequireSuperadmin({ children }: { children: React.ReactNode }) {
+  const user = useAuthStore((s) => s.user);
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role !== 'superadmin') return <Navigate to="/" replace />;
+  return <>{children}</>;
 }
 
 export default function App() {
@@ -32,6 +40,7 @@ export default function App() {
           <Route path="customers" element={<CustomersPage />} />
           <Route path="vehicles" element={<VehiclesPage />} />
           <Route path="fipe" element={<FipePage />} />
+          <Route path="admin" element={<RequireSuperadmin><AdminPage /></RequireSuperadmin>} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

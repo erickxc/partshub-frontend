@@ -2,7 +2,7 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Package, BarChart3, Users,
   ShoppingCart, LogOut, Wrench, FileText,
-  Car, CreditCard,
+  Car, CreditCard, Building2,
 } from 'lucide-react';
 import { useAuthStore } from '../stores/auth.store';
 
@@ -33,9 +33,18 @@ const navGroups = [
   },
 ];
 
+const adminGroup = {
+  label: 'Sistema',
+  items: [
+    { to: '/admin', icon: Building2, label: 'Tenants' },
+  ],
+};
+
 export function Layout() {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
+  const isSuperadmin = user?.role === 'superadmin';
+  const groups = isSuperadmin ? [...navGroups, adminGroup] : navGroups;
 
   return (
     <div className="flex h-screen bg-ph-bg overflow-hidden">
@@ -58,7 +67,7 @@ export function Layout() {
 
         {/* Nav */}
         <nav className="flex-1 px-2 py-3 overflow-y-auto">
-          {navGroups.map((group, gi) => (
+          {groups.map((group, gi) => (
             <div key={group.label} className={gi > 0 ? 'mt-4' : ''}>
               <div className="px-2 mb-0.5 text-2xs font-semibold uppercase tracking-wider text-ph-soft" style={{ letterSpacing: '0.08em' }}>
                 {group.label}
