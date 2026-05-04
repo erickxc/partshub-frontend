@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    @apply bg-ph-bg text-ph-text antialiased;
+    font-family: '"IBM Plex Sans"', system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: theme('colors.ph.border-2'); border-radius: 0; }
+  ::-webkit-scrollbar-thumb:hover { background: theme('colors.ph.soft'); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* ── Buttons (compactos, peso 500) ── */
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 px-3 text-sm font-medium
+           transition-colors duration-100 cursor-pointer border select-none;
+    height: 30px;
+    border-radius: 2px;
+    letter-spacing: 0;
+  }
+  .btn:disabled { @apply opacity-50 cursor-not-allowed; }
+
+  .btn-primary {
+    @apply btn bg-ph-accent text-white border-ph-accent hover:bg-ph-accent-h hover:border-ph-accent-h;
+  }
+  .btn-secondary {
+    @apply btn bg-white text-ph-text border-ph-border-2 hover:bg-ph-surface-2 hover:border-ph-soft;
+  }
+  .btn-ghost {
+    @apply btn bg-transparent text-ph-muted border-transparent hover:bg-ph-surface-2 hover:text-ph-text;
+  }
+  .btn-dark {
+    @apply btn bg-ph-primary text-white border-ph-primary hover:bg-ph-primary-2 hover:border-ph-primary-2;
+  }
+  .btn-danger {
+    @apply btn bg-ph-danger text-white border-ph-danger hover:bg-red-700 hover:border-red-700;
+  }
+  .btn-sm { height: 24px; padding: 0 8px; font-size: 12px; }
+  .btn-lg { height: 36px; padding: 0 16px; font-size: 14px; }
+
+  /* ── Inputs ── */
+  .input {
+    @apply w-full bg-white border border-ph-border-2 text-ph-text
+           placeholder-ph-soft transition-colors duration-100;
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 2px;
+    outline: none;
+  }
+  .input:focus {
+    @apply border-ph-info;
+    box-shadow: 0 0 0 2px rgba(9, 105, 218, 0.2);
+  }
+  .input-dark {
+    @apply w-full bg-ph-primary-2 border border-ph-primary-3 text-white
+           placeholder-ph-soft transition-colors duration-100;
+    padding: 8px 10px;
+    font-size: 13px;
+    border-radius: 2px;
+    outline: none;
+  }
+  .input-dark:focus {
+    @apply border-ph-accent;
+    box-shadow: 0 0 0 2px rgba(200, 75, 22, 0.25);
+  }
+
+  /* ── Cards ── */
+  .card {
+    @apply bg-ph-surface border border-ph-border;
+    border-radius: 2px;
+  }
+
+  /* ── Tabelas (densas, corporativas) ── */
+  .table-wrap { @apply w-full overflow-x-auto; }
+  .data-table { @apply w-full border-collapse; font-size: 13px; }
+  .data-table thead tr { @apply bg-ph-surface-2 border-b border-ph-border-2; }
+  .data-table thead th {
+    @apply text-left font-semibold text-ph-muted uppercase tracking-wider;
+    font-size: 11px;
+    padding: 8px 12px;
+  }
+  .data-table tbody tr { @apply border-b border-ph-border transition-colors duration-75; }
+  .data-table tbody tr:hover { @apply bg-ph-surface-2; }
+  .data-table tbody tr:last-child { @apply border-b-0; }
+  .data-table tbody td {
+    @apply text-ph-text;
+    padding: 7px 12px;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    @apply inline-flex items-center font-medium border;
+    padding: 1px 6px;
+    font-size: 11px;
+    border-radius: 2px;
+    line-height: 1.4;
+  }
+  .badge-green  { @apply badge bg-ph-success-l text-ph-success border-emerald-300; }
+  .badge-red    { @apply badge bg-ph-danger-l text-ph-danger border-red-300; }
+  .badge-yellow { @apply badge bg-ph-warning-l text-ph-warning border-yellow-300; }
+  .badge-blue   { @apply badge bg-ph-info-l text-ph-info border-blue-300; }
+  .badge-gray   { @apply badge bg-ph-surface-2 text-ph-muted border-ph-border-2; }
+  .badge-orange { @apply badge bg-ph-accent-l text-ph-accent border-orange-300; }
+
+  /* ── Mono ── */
+  .mono { font-family: '"IBM Plex Mono"', monospace; font-feature-settings: 'tnum'; }
+  .price { @apply mono font-semibold text-ph-text; }
+  .sku   { @apply mono text-ph-muted text-xs; }
+
+  /* ── Page header (corporativo, com breadcrumb) ── */
+  .ph-header {
+    @apply bg-white border-b border-ph-border;
+    padding: 12px 20px 0;
+  }
+  .breadcrumb {
+    @apply text-2xs text-ph-soft mb-1;
+  }
+  .breadcrumb strong { @apply text-ph-muted font-semibold; }
+  .ph-header-main {
+    @apply flex items-center justify-between gap-4;
+    padding-bottom: 12px;
+  }
+  .ph-header-title {
+    @apply text-lg font-semibold text-ph-text leading-none;
+    letter-spacing: -0.01em;
+  }
+  .ph-header-actions { @apply flex items-center gap-2; }
+  .page-body  { padding: 16px 20px; }
+
+  /* Legacy aliases (compat) */
+  .page-header {
+    @apply flex items-center justify-between bg-white border-b border-ph-border;
+    padding: 12px 20px;
+  }
+  .page-title {
+    @apply text-lg font-semibold text-ph-text;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── Form label ── */
+  .label {
+    @apply block font-semibold text-ph-muted uppercase tracking-wider;
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  /* ── Dropdown menu ── */
+  .dropdown-menu {
+    @apply absolute right-0 mt-1 bg-white border border-ph-border-2 z-50;
+    min-width: 240px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-radius: 2px;
+  }
+  .dropdown-section {
+    @apply border-b border-ph-border last:border-b-0;
+    padding: 4px 0;
+  }
+  .dropdown-section-label {
+    @apply text-2xs font-semibold text-ph-soft uppercase tracking-wider;
+    padding: 6px 12px 2px;
+  }
+  .dropdown-item {
+    @apply flex items-center gap-2.5 w-full text-left text-sm text-ph-text
+           transition-colors duration-75;
+    padding: 6px 12px;
+  }
+  .dropdown-item:hover { @apply bg-ph-surface-2; }
+  .dropdown-item:disabled { @apply opacity-50 cursor-not-allowed bg-transparent; }
+  .dropdown-item-danger { @apply text-ph-danger; }
+  .dropdown-item-danger:hover { @apply bg-ph-danger-l; }
+
+  /* ── Pay buttons ── */
+  .pay-btn {
+    @apply flex flex-col items-center justify-center gap-1 border text-sm font-medium
+           transition-colors duration-100 cursor-pointer select-none;
+    padding: 8px 4px;
+    border-radius: 2px;
+  }
+  .pay-btn-active {
+    @apply pay-btn bg-ph-accent text-white border-ph-accent;
+  }
+  .pay-btn-inactive {
+    @apply pay-btn bg-white text-ph-muted border-ph-border-2 hover:border-ph-accent hover:text-ph-accent;
+  }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    background: rgba(31, 35, 40, 0.5);
+  }
+  .modal-content {
+    @apply bg-white border border-ph-border-2;
+    border-radius: 4px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  }
+  .modal-header {
+    @apply flex items-center justify-between border-b border-ph-border;
+    padding: 12px 16px;
+  }
+  .modal-body { padding: 16px; }
+  .modal-footer {
+    @apply flex items-center justify-end gap-2 border-t border-ph-border bg-ph-surface-2;
+    padding: 10px 16px;
+    border-radius: 0 0 4px 4px;
+  }
+}
