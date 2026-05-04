@@ -4,9 +4,13 @@ import {
   ShoppingCart, LogOut, Wrench, FileText,
   Car, CreditCard, Building2,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { useAuthStore } from '../stores/auth.store';
 
-const navGroups = [
+type NavItem = { to: string; icon: LucideIcon; label: string; end?: boolean };
+type NavGroup = { label: string; items: NavItem[] };
+
+const navGroups: NavGroup[] = [
   {
     label: 'Operação',
     items: [
@@ -33,7 +37,7 @@ const navGroups = [
   },
 ];
 
-const adminGroup = {
+const adminGroup: NavGroup = {
   label: 'Sistema',
   items: [
     { to: '/admin', icon: Building2, label: 'Tenants' },
